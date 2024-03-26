@@ -106,20 +106,20 @@
 !!! example "Этот скрипт создает книгу в формате PDF для печати на двухстороннем принтере"
     ```bash
     #!/bin/sh
-    if [ \$# -ne 1 ]; then                        # Проверяем аргумент
-      echo 1>&2 "Использование: \$0 HtmlFile"
+    if [ $# -ne 1 ]; then                        # Проверяем аргумент
+      echo 1>&2 "Использование: $0 HtmlFile"
       exit 1                                     # Ненулевое значение при ошибке
     fi
     
-    file=\$1                                      # Присваиваем имя файла
-    fname=\${file%.*}                             # Получаем только имя файла
-    fext=\${file#*.}                              # Получаем расширение файла
+    file=$1                                      # Присваиваем имя файла
+    fname=${file%.*}                             # Получаем только имя файла
+    fext=${file#*.}                              # Получаем расширение файла
     
-    prince \$file -o \$fname.pdf                   # от www.princexml.com
-    pdftops -paper A4 -noshrink \$fname.pdf \$fname.ps # создаем постскриптовый буклет
-    cat \$fname.ps |psbook|psnup -Pa4 -2 |pstops -b "2:0,1U(21cm,29.7cm)" > \$fname.book.ps
+    prince $file -o $fname.pdf                   # от www.princexml.com
+    pdftops -paper A4 -noshrink $fname.pdf $fname.ps # создаем постскриптовый буклет
+    cat $fname.ps |psbook|psnup -Pa4 -2 |pstops -b "2:0,1U(21cm,29.7cm)" > $fname.book.ps
     
-    ps2pdf13 -sPAPERSIZE=a4 -sAutoRotatePages=None \$fname.book.ps \$fname.book.pdf
+    ps2pdf13 -sPAPERSIZE=a4 -sAutoRotatePages=None $fname.book.ps $fname.book.pdf
                                                  # используем #a4 и #None в Windows!
     exit 0                                       # успешное завершение
     ```
@@ -148,8 +148,8 @@ Awk полезен для разделения полей, подобного cu
     **sed -i 's/wroong/wrong/g' *.txt**                    - Заменить повторяющееся слово с помощью g  
     **sed 's/\\(.*\\)1/\12/g'**                            - Изменить anystring1 на anystring2  
     **sed '/&lt;p&gt;/,/&lt;/p&gt;/d' t.xhtml**                     - Удалить строки, начинающиеся с `<p>` и заканчивающиеся `</p>`  
-    **sed '/ \*#/d; /\^ \*\\$/d'**                              - Удалить комментарии и пустые строки  
-    **sed 's/[ \t]\*\\$//'**                                  - Удалить конечные пробелы (используйте вкладку вместо \t)  
+    **sed '/ \*#/d; /\^ \*\$/d'**                              - Удалить комментарии и пустые строки  
+    **sed 's/[ \t]\*\$//'**                                  - Удалить конечные пробелы (используйте вкладку вместо \t)  
     **sed 's/\^[ \t]\*//;s/[ \t]\*\$//'**                    - Удаление ведущих и завершающих пробелов  
     **sed 's/[\^\*]/[&amp;]/'**                              - Заключить первый символ в []  
     **sed = file | sed 'N;s/\n/\t/' &gt; file.num**        - Нумерация строк в файле  
