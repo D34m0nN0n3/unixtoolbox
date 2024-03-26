@@ -1,0 +1,141 @@
+site_name: UnixToolbox
+site_author: "Dmitriy Prigoda"
+site_description: >-
+  Сборником команд и задач (UnixToolbox)
+site_url: "https://D34m0nN0n3.github.io/unixtoolbox/"
+
+repo_name: D34m0nN0n3/unixtoolbox
+repo_url: https://github.com/D34m0nN0n3/unixtoolbox
+edit_uri: ""
+
+use_directory_urls: false
+
+copyright: Copyright &copy; <a href="https://github.com/D34m0nN0n3">Dmitriy Prigoda</a>.
+
+nav:
+    - UnixToolbox: 'index.md'
+    - Система: 'system.md'
+    - Процессы: 'processes.md'
+    - Файловая система: 'file_system.md'
+    - Сеть: 'network.md'
+    - SSH SCP: 'ssh_scp.md'
+    - VPN: 'vpn_with_ssh.md'
+    - RSYNC: 'rsync.md'
+    - SUDO: 'sudo.md'
+    - Шифрование файлов: 'encrypt_files.md'
+    - Шифрование разделов: 'encrypt_partitions.md'
+    - Сертификаты SSL: 'ssl_certificates.md'
+    - CVS: 'cvs.md'
+    - SVN: 'svn.md'
+    - GIT: 'git.md'
+    - Полезные команды: 'useful_commands.md'
+    - Установка программного обеспечения: 'install_software.md'
+    - Конвертирование медиафайлов: 'convert_media.md'
+    - Печать: 'printing.md'
+    - Базы данных: 'database.md'
+    - Квотирование диска: 'disk_quota.md'
+    - Терминальные оболочки: 'shells.md'
+    - Создание скриптов: 'scripting.md'
+    - Программирование: 'programming.md'
+    - Управление конфигурациями: 'configuration_management.md'
+
+plugins:
+  - autolinks
+  - search:
+      lang:
+        - en
+        - ru
+  - section-index
+  - table-reader
+  - thumbnails:
+      style: margin-top:5px;margin-bottom:5px;margin-right:25px  
+  - git-revision-date-localized
+  - git-revision-date
+  - macros
+  - minify:
+      minify_html: true
+  - with-pdf:
+      copyright: https://github.com/D34m0nN0n3
+      cover_subtitle: ''
+      output_path: UnixToolbox.pdf
+
+extra_css:
+  - assets/extra.css
+
+extra_javascript:
+  - assets/extra.js
+  - assets/tex-mml-chtml.js
+  - assets/tablesort.min.js
+  - assets/tablesort.js
+
+theme:
+  name: material
+  custom_dir: material
+  language: ru
+  features:
+    - content.tabs.link
+    - navigation.indexes
+    - navigation.top
+    - navigation.tracking
+    - search.highlight
+    - search.share
+    - search.suggest
+    - toc.integrate
+  palette:
+    - scheme: default
+      primary: blue grey
+      accent: red
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to dark mode
+    - scheme: slate
+      primary: black
+      accent: red
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to light mode
+  font:
+    text: Roboto
+    code: Roboto Mono
+  favicon: assets/img/favicon/favicon.png
+  logo: assets/img/logo/logo.svg
+
+markdown_extensions:
+  - admonition
+  - abbr
+  - attr_list
+  - def_list
+  - codehilite:
+      linenums: true
+  - footnotes
+  - toc:
+      permalink: true
+      slugify: !!python/name:pymdownx.slugs.uslugify
+  - meta
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.details
+  - pymdownx.emoji
+  - pymdownx.inlinehilite
+  - pymdownx.magiclink
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - pymdownx.tabbed
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.keys
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - markdown_blockdiag:
+      format: svg
+  - markdown_include.include
+  - markdown.extensions.attr_list 
+
+extra:
+  generator: false
+  analytics:
+    provider: google
+    property: G-BT11X31T69
