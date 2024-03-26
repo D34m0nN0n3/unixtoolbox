@@ -13,9 +13,14 @@ regex>=2022.4
 requests~=2.26
 
 # Requirements for theme
+mkdocs-git-revision-date-plugin
+mkdocs-git-revision-date-localized-plugin
 mkdocs-glightbox
 mkdocs-macros-plugin
 mkdocs-material
 mkdocs-material-extensions
 mkdocs-minify-plugin
 mkdocs-redirects
+mkdocs-user-defined-values
+mkdocs-vim-md-tags-plugin
+mkdocs-with-pdf
