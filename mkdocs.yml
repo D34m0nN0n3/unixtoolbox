@@ -40,15 +40,11 @@ nav:
     - Управление конфигурациями: 'configuration_management.md'
 
 plugins:
-  - autolinks
   - search:
       lang:
         - en
         - ru
-  - section-index
-  - table-reader
-  - thumbnails:
-      style: margin-top:5px;margin-bottom:5px;margin-right:25px  
+      separator: '[\s\u200b\-_,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
   - git-revision-date-localized
   - git-revision-date
   - macros
@@ -101,36 +97,54 @@ theme:
   logo: assets/img/logo/logo.svg
 
 markdown_extensions:
-  - admonition
   - abbr
+  - admonition
   - attr_list
   - def_list
-  - codehilite:
-      linenums: true
   - footnotes
+  - md_in_html
   - toc:
       permalink: true
       slugify: !!python/name:pymdownx.slugs.uslugify
-  - meta
+  - pymdownx.arithmatex:
+      generic: true
   - pymdownx.betterem:
       smart_enable: all
   - pymdownx.caret
   - pymdownx.details
-  - pymdownx.emoji
+  - pymdownx.emoji:
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
   - pymdownx.inlinehilite
-  - pymdownx.magiclink
+  - pymdownx.keys
+  - pymdownx.magiclink:
+      normalize_issue_symbols: true
+      repo_url_shorthand: true
+      user: squidfunk
+      repo: mkdocs-material
   - pymdownx.mark
   - pymdownx.smartsymbols
-  - pymdownx.snippets
-  - pymdownx.superfences
-  - pymdownx.tabbed
-  - pymdownx.betterem:
-      smart_enable: all
-  - pymdownx.keys
+  - pymdownx.snippets:
+      auto_append:
+        - includes/mkdocs.md
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+      combine_header_slug: true
+      slugify: !!python/object/apply:pymdownx.slugs.slugify
+        kwds:
+          case: lower
   - pymdownx.tasklist:
       custom_checkbox: true
-  - markdown_include.include
-  - markdown.extensions.attr_list 
+  - pymdownx.tilde
 
 extra:
   generator: false
