@@ -129,8 +129,6 @@ markdown_extensions:
   - pymdownx.keys
   - pymdownx.tasklist:
       custom_checkbox: true
-  - markdown_blockdiag:
-      format: svg
   - markdown_include.include
   - markdown.extensions.attr_list 
 
