@@ -23,5 +23,6 @@ with open("requirements.txt") as data:
 
 # Package description
 setup(
+    name = "mkdocs-material",
     install_requires = install_requires,
 )
