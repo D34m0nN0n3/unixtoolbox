@@ -193,6 +193,6 @@ Awk полезен для разделения полей, подобного cu
 
 !!! example ""
     **# ls *.cxx | awk -F. '{print "mv "$0" "$1".cpp"}' | sh**  
-    **# ls *.c | sed "s/.*/cp & &.$(date "+%Y%m%d")/" | sh**      - например, копирование *.c в *.c.20080401  
-    **# rename .cxx .cpp *.cxx**                                  - Переименовать все .cxx в .cpp  
+    **# ls *.c | sed "s/.*/cp & &.$(date "+%Y%m%d")/" | sh**      - например, копирование `*.c` в `*.c.20080401`  
+    **# rename .cxx .cpp *.cxx**                                  - Переименовать все `.cxx` в `.cpp`  
     **# for i in *.cxx; do mv $i ${i%%.cxx}.cpp; done**           - с помощью встроенных средств bash  
