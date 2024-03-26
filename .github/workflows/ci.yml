@@ -1,25 +1,39 @@
-name: ci
+name: ci 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - master 
+      - main
   pull_request:
-    branches: [ main ]
+    branches:
+      - master 
+      - main
+permissions:
+  contents: write
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: [ 3.8 ]
     if: github.event.repository.fork == false
     steps:
-      - uses: actions/checkout@v2
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v2
+      - uses: actions/checkout@v4
+      - name: Configure Git Credentials
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+      - uses: actions/setup-python@v5
         with:
-          python-version: ${{ matrix.python-version }}
-          architecture: x64
+          python-version: 3.x
+      - run: echo "cache_id=$(date --utc '+%V')" >> $GITHUB_ENV 
+      - uses: actions/cache@v4
+        with:
+          key: mkdocs-material-${{ env.cache_id }}
+          path: .cache
+          restore-keys: |
+            mkdocs-material-
       - name: Install upgrade pip
         run: python3 -m pip install --upgrade pip
+      - name: Install Python material theme
+        run: pip install mkdocs-material 
       - name: Install Python dependencies
         run: python3 -m pip install -r requirements.txt
-      - run: python3 -m mkdocs gh-deploy --force
+      - run: mkdocs gh-deploy --force
