@@ -41,10 +41,10 @@ nav:
 
 plugins:
   - search:
-      lang:
-        - en
-        - ru
-      # separator: '[\s\u200b\-_,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
+      separator: '[\s\u200b\-_,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
+      # lang:
+        # - en
+        # - ru
   - git-revision-date-localized
   - git-revision-date
   - macros
