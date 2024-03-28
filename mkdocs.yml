@@ -44,7 +44,6 @@ plugins:
       lang:
         - en
         - ru
-      # separator: '[\s\u200b\-_,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
   - git-revision-date-localized
   - git-revision-date
   - macros
