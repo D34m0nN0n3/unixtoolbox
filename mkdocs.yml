@@ -69,6 +69,7 @@ theme:
   language: ru
   features:
     - content.tabs.link
+    - navigation.footer
     - navigation.indexes
     - navigation.top
     - navigation.tracking
