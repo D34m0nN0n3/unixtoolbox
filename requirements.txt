@@ -8,6 +8,7 @@ pymdown-extensions~=10.2
 
 # Requirements for plugins
 babel~=2.10
+beautifulsoup4~=4.6.3
 colorama~=0.4
 paginate~=0.5
 regex>=2022.4

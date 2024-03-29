@@ -1,9 +1,10 @@
+import logging
+import mkdocs.plugins
+import mkdocs.structure.pages
 from bs4 import BeautifulSoup, PageElement
-from mkdocs import utils
-from mkdocs.plugins import BasePlugin
-from mkdocs.structure.pages import Page
 
 def modify_html(html: str, href: str) -> str:
+    logger.info(f'(hook on inject_link: {page.title})')
     # SVG 'file-download' size 2x from fontawesome: https://fontawesome.com/icons/file-download?style=solid
     # resized to 1.2rem width * height
     a_tag = "<a class=\"md-content__button md-icon\" download href=\"%s\" title=\"PDF Export\">" % href
