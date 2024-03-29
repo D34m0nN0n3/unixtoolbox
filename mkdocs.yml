@@ -54,6 +54,15 @@ plugins:
       cover_subtitle: ''
       output_path: UnixToolbox.pdf
 
+extra:
+  alternate:
+    - name: Russian
+      link: /ru/
+      lang: ru
+    - name: English
+      link: /en/ 
+      lang: en
+
 extra_css:
   - assets/extra.css
 
@@ -66,7 +75,7 @@ extra_javascript:
 theme:
   name: material
   custom_dir: material
-  language: ru
+  language: en
   features:
     - content.tabs.link
     - navigation.footer
@@ -96,6 +105,10 @@ theme:
   favicon: assets/img/favicon/favicon.png
   logo: assets/img/logo/logo.svg
 
+hooks:
+  - material/overrides/hooks/shortcodes.py
+  - material/overrides/hooks/translations.py
+
 markdown_extensions:
   - abbr
   - admonition
@@ -112,6 +125,9 @@ markdown_extensions:
       smart_enable: all
   - pymdownx.caret
   - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
   - pymdownx.highlight:
       anchor_linenums: true
       line_spans: __span
