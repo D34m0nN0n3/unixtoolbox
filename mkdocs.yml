@@ -54,15 +54,6 @@ plugins:
       cover_subtitle: ''
       output_path: UnixToolbox.pdf
 
-extra:
-  alternate:
-    - name: Russian
-      link: /ru/
-      lang: ru
-    - name: English
-      link: /en/ 
-      lang: en
-
 extra_css:
   - assets/extra.css
 
@@ -108,6 +99,7 @@ theme:
 hooks:
   - material/overrides/hooks/shortcodes.py
   - material/overrides/hooks/translations.py
+  - material/overrides/hooks/pdf.py
 
 markdown_extensions:
   - abbr
