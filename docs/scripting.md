@@ -625,7 +625,7 @@ Python применяется в различных сферах от админ
 
 ??? quote "Результат"
     ``` console
-    Please enter FQDN hosts or IP address:  10.248.0.180, gvc-tex-docs-01.gvc.oao.rzd
+    Please enter FQDN hosts or IP address:  8.8.8.8, example.com
     Please enter ports numbers:  53, 80, 443, 65556
     Check host(s): ############################################################# 100%
     2.00/2.00 [00:02<00:00, 2.10s/run_check]
@@ -633,13 +633,13 @@ Python применяется в различных сферах от админ
     
     Format table Markdown
     
-    | Host                        | Format   | DNS          | Ping   |   Ports |
-    |:----------------------------|:---------|:-------------|:-------|--------:|
-    | 10.248.0.180                | True     | Skip         | True   |      53 |
-    | gvc-tex-docs-01.gvc.oao.rzd | True     | 10.248.44.35 | False  |      80 |
+    | Host                        | Format   | DNS           | Ping   |   Ports |
+    |:----------------------------|:---------|:--------------|:-------|--------:|
+    | 8.8.8.8                     | True     | Skip          | True   |      53 |
+    | example.com                 | True     | 93.184.216.34 | False  |      80 |
     
     ---> Task time: 0:00:00.00 <---
-    [{'Host': '10.248.0.180', 'Format': True, 'DNS': 'Skip', 'Ping': True, 'Ports': '53'}, {'Host': 'gvc-tex-docs-01.gvc.oao.rzd', 'Format': True, 'DNS': '10.248.44.35', 'Ping': False, 'Ports': '80'}]
+    [{'Host': '8.8.8.8', 'Format': True, 'DNS': 'Skip', 'Ping': True, 'Ports': '53'}, {'Host': 'example.com', 'Format': True, 'DNS': '93.184.216.34', 'Ping': False, 'Ports': '80'}]
     ```
 
 #### Password generator
@@ -890,8 +890,8 @@ Python применяется в различных сферах от админ
 
 !!! example ""
     ``` console
-    python -m pip install --force-reinstall --index-url http://nexus.rzd/repository/pypi-proxy/simple/ --trusted-host nexus.rzd --upgrade pip
-    python -m pip install --use-pep517 --force-reinstall --index-url http://nexus.rzd/repository/pypi-proxy/simple/ --trusted-host nexus.rzd -U \
+    python -m pip install --force-reinstall --upgrade pip
+    python -m pip install --use-pep517 --force-reinstall -U \
     wheel jupyterlab notebook jupyter-git ipywidgets
     ```
 
