@@ -126,7 +126,827 @@
 
 ### 22.3 Написание сценариев на Python
 
-TO DO
+Основные особенности языка программирования Python:
+
+* Скриптовый язык. Код программ определяется в виде скриптов.
+
+* Поддержка самых различных парадигм программирования, в том числе объектно-ориентированной и функциональной парадигм.
+
+* Интерпретация программ. Для работы со скриптами необходим интерпретатор, который запускает и выполняет скрипт.
+
+* Портативность и платформонезависимость. Не имеет значения, какая у нас операционная система - Windows, Mac OS, Linux, нам достаточно написать скрипт, который будет запускаться на всех этих ОС при наличии интерпретатора.
+
+* Автоматическое управление памяти.
+
+* Динамическая типизация.
+
+Python применяется в различных сферах от администрирования до аналитики.
+
+#### В примере ниже приведен код функции декорирования. Данная функция оборачивается вокруг другой функции расширяя ее возможности
+
+!!! example "Пример кода"
+    ``` python
+    """ Пример декоратора (функция с замыканием)
+    """
+    var = f'Основная функция!'
+    
+    def decor(func):
+        func_out = None
+        def inner(*args,**kwargs):
+            nonlocal func_out
+            print(f'*' * 100 + f'\n')
+            func_out = func(*args,**kwargs)
+            print(f'\n' + f'*' * 100)
+            return func_out
+        return inner
+    
+    @decor
+    def hellow(*args):
+        for a in args:
+            print(a)
+    
+    hellow(var)
+    ```
+
+??? quote "Результат"
+    ``` console
+    ****************************************************************************************************
+    
+    Основная функция!
+    
+    ****************************************************************************************************
+    ```
+
+#### Пример декоратора замеряющего время выполнения функции
+
+!!! example "Пример кода"
+    ``` python
+    import time
+    
+    from datetime import datetime
+    
+    def task_time(func):
+        """Add time task works
+        
+        Example:
+          @task_time
+          function_name(*args, **kwargs):
+            pass
+        """
+        func_out = None
+        def time_stamp(*args, **kwargs):
+            nonlocal func_out
+            stime = datetime.now()
+            print(f"Function: {func.__name__}")
+            func_out = func(*args, **kwargs)
+            etime = f"Task time: {str(datetime.now() - stime)[:10]}"
+            eline = round((10 - len(etime) - 2) / 2)
+            print(f"{etime}")
+            return func_out
+        time_stamp.__name__ = func.__name__
+        time_stamp.__doc__ = func.__doc__
+        return time_stamp
+    
+    @task_time
+    def create_array(size):
+        """Create array
+        """
+        time.sleep(1.15)
+        array = [[ x for x in range(0,size)] for y in range(size)]
+        return array
+    
+    size = int(input('Enter size: '))
+    
+    a = create_array(size)
+    
+    print(f'\nPrint resault:')
+    for i in a:
+        print(*i)
+    ```
+
+??? quote "Результат"
+    ``` console
+    Enter size:  5
+    Function: create_array
+    Task time: 0:00:01.15  
+    
+    Print resault:
+    0 1 2 3 4
+    0 1 2 3 4
+    0 1 2 3 4
+    0 1 2 3 4
+    0 1 2 3 4
+    ```
+
+#### Меняем переменные местами
+
+!!! example "Пример кода"
+    ``` python
+    a, b = 1, 2
+    print(f'Before: a = {a}, b = {b}')
+    a, b = b, a
+    print(f'After: a = {a}, b = {b}')
+    ```
+
+??? quote "Результат"
+    ``` console
+    Before: a = 1, b = 2
+    After: a = 2, b = 1
+    ```
+
+#### Создание числовой последовательности с добавленными нулями
+
+!!! example "Пример кода"
+    ``` python
+    for i in range(1,15+1):
+        print(f'{i:05d}')
+    ```
+
+??? quote "Результат"
+    ``` console
+    00001
+    00002
+    00003
+    00004
+    00005
+    00006
+    00007
+    00008
+    00009
+    00010
+    00011
+    00012
+    00013
+    00014
+    00015
+    ```
+
+#### Во фрагменте кода ниже приведен алгоритм выбора из веденных данных
+
+!!! example "Пример кода"
+    ``` python
+    """ Цыкл с выбором
+    """
+    while True:
+        choice = str(input(f'Хочешь?\n>').lower())
+        if choice in ('да', 'о да'): 
+            print("Хочу")
+            break
+        elif choice in ('нет', 'ну нет'):
+            print("Не хочу")
+            pass
+        else:
+            print('Еще раз!')
+    ```
+
+??? quote "Результат"
+    ``` console
+    Хочешь?
+    >нет
+    Не хочу
+    Хочешь?
+    >точно
+    Еще раз!
+    Хочешь?
+    >да
+    Хочу
+    ```
+
+#### Пример наглядно показывает отличие списка от множества. В множестве на основе списка отсутствуют дубликаты
+
+!!! example "Пример кода"
+    ``` python
+    """ Счетчик и множество
+    """
+    from collections import Counter
+    
+    my_list = ['foo', 'bar', 'etc', 'etc']
+    for i in my_list:
+        print(i)
+    
+    # Подсчет
+    print(Counter(my_list))
+    # Множиство удаляет дубликат
+    print({i for i in my_list})
+    ```
+
+??? quote "Результат"
+    ``` console
+    foo
+    bar
+    etc
+    etc
+    Counter({'etc': 2, 'foo': 1, 'bar': 1})
+    {'bar', 'foo', 'etc'}
+    ```
+
+#### В примере демонстрируется разбиение строки и создание списка с использованием нескольких видов разделителя
+
+!!! example "Пример кода"
+    ``` python
+    """ Мульти разделитель
+    """
+    import re
+    
+    my_list1 = str('id,id -h, who;who --help; ls')
+    my_list2 = str('1.1.1.1,1.1.1.2, 2.2.2.2;2.2.2.3; 3.3.3.3')
+    
+    q = list(map(str, re.split(r'[,;]+ ?',input('Please enter FQDN host for register: '))))
+    q1 = list(map(str, re.split(r'[,;]+ ?',my_list1)))
+    q2 = list(map(str, re.split(r'[,;]+ ?',my_list2)))
+    
+    print(q1,q2)
+    
+    for item in q1:
+        print(f'> {item}')
+    
+    print('')
+    
+    for item in q2:
+        print(f'ip: {item}')
+    ```
+
+??? quote "Результат"
+    ``` console
+    ['id', 'id -h', 'who', 'who --help', 'ls'] ['1.1.1.1', '1.1.1.2', '2.2.2.2', '2.2.2.3', '3.3.3.3']
+    > id
+    > id -h
+    > who
+    > who --help
+    > ls
+
+    ip: 1.1.1.1
+    ip: 1.1.1.2
+    ip: 2.2.2.2
+    ip: 2.2.2.3
+    ip: 3.3.3.3
+    ```
+
+#### Пример скрипта работы с сетью
+
+Проверка формата соответствия форматам записи: IP адресов, FQDN и портов TCP.
+
+!!! example "Пример кода"
+    ``` python
+    import csv, getopt, logging, os, re, socket
+    
+    from concurrent.futures import as_completed, ThreadPoolExecutor
+    from datetime import datetime
+    from icmplib import ping, multiping
+    from shlex import quote
+    from tabulate import tabulate
+    from tqdm.notebook import trange, tqdm
+    
+    log_file = 'check_hosts.log'
+    
+    if os.path.exists(log_file):
+        fmode = 'a'
+    else:
+        fmode = 'w'
+        
+    logging.basicConfig(level=logging.INFO, filename=log_file, filemode=fmode, datefmt='%d-%b-%y %H:%M:%S', format='%(asctime)s - Level severity: [%(levelname)s] USER: %(name)s, PID: %(process)d - FUNCTON:(%(filename)s).%(funcName)s(%(lineno)d), Thread ID: %(thread)d, MSG: %(message)s')
+    
+    def task_time(func):
+        """ Decorator add task running time
+    
+        Args:
+            func (function): _description_
+    
+        Returns:
+            string: The time it took for the task to complete
+        """
+        func_out = None
+        def time_stamp(*args, **kwargs):
+            nonlocal func_out
+            stime = datetime.now()
+            print(f"---> Function: {func.__name__} <---")
+            func_out = func(*args, **kwargs)
+            etime = f"Task time: {str(datetime.now() - stime)[:10]}"
+            print(f"\n---> {etime} <---")
+            return func_out
+        time_stamp.__name__ = func.__name__
+        time_stamp.__doc__ = func.__doc__
+        return time_stamp
+    
+    def check_fqdn(host):
+        """ Checks the format of the entry for compliance with the FQDN spelling rules
+    
+        Args:
+            host (string): Hostname of the host being checked
+    
+        Returns:
+            boolean: The time it took for the task to complete
+        """
+        try:
+            fqdn = re.search(r'(?=^.{4,253}$)(^((?!-)[a-zA-Z0-9-]{1,63}(?<!-)\.)+[a-zA-Z]{2,63}$)', host)
+            if fqdn is None:
+                return False
+            else:
+                return True
+        except (Exception, getopt.GetoptError) as err:
+            logging.exception("Exception occurred")
+    
+    def check_ip_addr(host):
+        """ Checks the format of the entry for compliance with the IP address spelling rules
+    
+        Args:
+            host (string): IP address of the host being checked
+    
+        Returns:
+            boolean: The time it took for the task to complete
+        """
+        try:
+            ip_addr = re.search(r'(?=^.{7,16}$)(^(?:\d{1,3}\.){3}\d{1,3}$)', host)
+            if ip_addr is None:
+                return False
+            else:
+                return True
+        except (Exception, getopt.GetoptError) as err:
+            logging.exception("Exception occurred")
+    
+    def check_dns(host):
+        """ Checks for a record in the DNS
+    
+        Args:
+            host (string): Hostname of the host being checked
+    
+        Returns:
+            boolean: True if the entry exists
+        """
+        try:
+            dns_data = socket.gethostbyname(host)
+            if dns_data is not None:
+                return True, dns_data
+        except socket.gaierror:
+            logging.exception("Exception occurred")
+    
+    def check_ping(host):
+        """ Checks host availability with icmp request
+    
+        Args:
+            host (string): Hostname or IP address of the host being checked
+    
+        Returns:
+            boolean: True if the entry exists
+        """
+        try:
+            ping_status = ping(host, count=1, timeout=2, id=None, source=None, family=None, privileged=True)
+            return ping_status.is_alive
+        except (Exception, getopt.GetoptError) as err:
+            logging.exception("Exception occurred")
+    
+    def check_port(host, port):
+        """ Checks if a port is open
+    
+        Args:
+            host (string): Hostname or IP address of the host being checked
+            port (string): Port number to check
+    
+        Returns:
+            boolean: True if the port is open
+        """
+        port_match = re.search(r'(^((6553[0-5])|(655[0-2][0-9])|(65[0-4][0-9]{2})|(6[0-4][0-9]{3})|([1-5][0-9]{4})|([0-5]{0,5})|([0-9]{1,4}))$)', port)
+        if port_match is None:
+            return False, None
+        else:
+            socket.setdefaulttimeout(3.0)
+            try:
+                s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            except socket.error:
+                logging.exception("Exception occurred")
+            try:
+                result = s.connect_ex((host, int(port)))
+                s.close()
+                if result is not None and result == 0:
+                    return True, result
+                else:
+                    return False, result
+            except (Exception, getopt.GetoptError) as err:
+                logging.exception("Exception occurred")
+    
+    def run_check(host, ports, list_hosts, position):
+        """ Run check
+    
+        Args:
+            host (string): Host for check
+            ports (list): Port for check
+            list_hosts (list): List results
+    
+        Returns:
+            list: List results
+        """
+        count_host = 0
+        count_port = 0
+        list_ports = list()
+        status_ping = check_ping(host['Host'])
+        if status_ping is True:
+            count_host += 1
+        pbar = tqdm(set(ports), dynamic_ncols=False, position=position, leave=None, disable=False)
+        for port in pbar:
+            pbar.set_description(f"Host {host['Host']}, Port {port}")
+            status_port = check_port(host['Host'], port)
+            if status_port[0] is True:
+                list_ports.append(port)
+                count_port += 1
+        if count_host != 0 and count_port != 0:
+            list_hosts.append({'Host':host['Host'],'Format':True,'DNS':host['DNS'],'Ping':True,'Ports':",".join(sorted(list_ports, key=len))})
+        elif count_host != 0 and count_port == 0:
+            list_hosts.append({'Host':host['Host'],'Format':True,'DNS':host['DNS'],'Ping':True,'Ports':None})
+        elif count_host == 0 and count_port != 0:
+            list_hosts.append({'Host':host['Host'],'Format':True,'DNS':host['DNS'],'Ping':False,'Ports':",".join(sorted(list_ports, key=len))})
+        else:
+            print(f'The host could not be verified or is not available')
+        
+        return list_hosts
+    
+    @task_time
+    def show_ckeck(list_hosts):
+        """ Generates a summary table with results
+    
+        Args:
+            list_hosts (list): List of dictionaries with hosts state
+        """
+        print(f'\nFormat table Markdown\n')
+        print(tabulate(list_hosts, headers='keys', tablefmt='pipe'))
+    
+    def write_csv(file, data):
+        """ Save results to CSV file.
+    
+        Args:
+            file (string): CSV file
+            data (list): Check result
+        """
+        with open(file, 'w', newline= '') as csvfile:
+            header_key = ['Host', 'Format', 'DNS', 'Ping', 'Ports']
+            writer = csv.DictWriter(csvfile, fieldnames=header_key)
+            writer.writeheader()
+            for item in data:
+                writer.writerow(item)
+    
+    def main():
+        try:
+            hosts = list(map(str, re.split(r'[,;]+ ?',input('Please enter FQDN hosts or IP address: '))))
+            ports = list(map(str, re.split(r'[,;]+ ?',input('Please enter ports numbers: '))))
+            csv_file = 'check_hosts.csv'
+            current_hosts = list()
+            invalid_hosts = list()
+            for host in set(hosts):
+                ip = check_ip_addr(host)
+                if ip is True:
+                    current_hosts.append({'Host':host,'Format':True,'DNS':'Skip'})
+                elif ip is False:
+                    fqdn = check_fqdn(host)
+                    if fqdn is True:
+                        dns = check_dns(host)
+                        if dns[0] is True:
+                            current_hosts.append({'Host':host,'Format':True,'DNS':dns[1]})
+                        else:
+                            invalid_hosts.append({'Host':host,'Format':True,'DNS':False})
+                    else:
+                        invalid_hosts.append({'Host':host,'Format':False,'DNS':False})
+                else:
+                    invalid_hosts.append({'Host':host,'Format':True,'DNS':False})
+            
+            list_hosts = list()
+            with ThreadPoolExecutor(max_workers = None) as executor:
+                futures = [executor.submit(run_check, host, ports, list_hosts, len(current_hosts)) for host in current_hosts]        
+                for f in tqdm(as_completed(futures), total=len(current_hosts), position=0, dynamic_ncols=True, unit='run_check', unit_scale=True, disable=False, desc="Check host(s)"):
+                    pass
+            
+            show_ckeck(list_hosts)
+            print(list_hosts)
+            write_csv(csv_file, list_hosts)
+        except (Exception, getopt.GetoptError) as err:
+            logging.exception("Exception occurred")
+    
+    if __name__ == "__main__":
+        main()
+    ```
+
+??? quote "Результат"
+    ``` console
+    Please enter FQDN hosts or IP address:  10.248.0.180, gvc-tex-docs-01.gvc.oao.rzd
+    Please enter ports numbers:  53, 80, 443, 65556
+    Check host(s): ############################################################# 100%
+    2.00/2.00 [00:02<00:00, 2.10s/run_check]
+    ---> Function: show_ckeck <---
+    
+    Format table Markdown
+    
+    | Host                        | Format   | DNS          | Ping   |   Ports |
+    |:----------------------------|:---------|:-------------|:-------|--------:|
+    | 10.248.0.180                | True     | Skip         | True   |      53 |
+    | gvc-tex-docs-01.gvc.oao.rzd | True     | 10.248.44.35 | False  |      80 |
+    
+    ---> Task time: 0:00:00.00 <---
+    [{'Host': '10.248.0.180', 'Format': True, 'DNS': 'Skip', 'Ping': True, 'Ports': '53'}, {'Host': 'gvc-tex-docs-01.gvc.oao.rzd', 'Format': True, 'DNS': '10.248.44.35', 'Ping': False, 'Ports': '80'}]
+    ```
+
+#### Password generator
+
+Генератор паролей, и linux хешей для утилиты `useradd`.
+
+!!! example "Пример кода"
+    ``` python
+    import crypt, csv, logging, os, random, string
+    from datetime import datetime
+    from shlex import quote
+    from tabulate import tabulate
+    
+    # Global variables
+    lower,upper,num,symbols = string.ascii_lowercase,string.ascii_uppercase,string.digits,string.punctuation
+    
+    def password_gen(сomplexity,length,pass_num):
+        """ Generat passwords.
+    
+        Args:
+            сomplexity (list): Password complexity
+            length (integer): Password length
+            pass_num (integer): Number of generated passwords
+        """
+        password_list = list()
+        for n in range(pass_num):
+            temp = random.sample(сomplexity,length)
+            salt = crypt.mksalt(method=crypt.METHOD_SHA512)
+            PLAIN = "".join(temp)
+            SHA512 = crypt.crypt(PLAIN, salt=salt)
+            password_list.append({'Password':PLAIN,'Hash':SHA512})
+        return password_list
+    
+    def show_table(password_list):
+        """ Print passwords tables.
+    
+        Args:
+            password_list (list): Passwords and hash
+        """
+        print(f'\nFormat table Markdown\n')
+        print(tabulate(password_list, headers='keys', tablefmt='pipe'))
+    
+    def write_csv(file, data):
+        """ Save results to CSV file.
+    
+        Args:
+            file (string): CSV file
+            data (list): Check result
+        """
+        with open(file, 'w', newline= '') as csvfile:
+            header_key = ['Password', 'Hash']
+            writer = csv.DictWriter(csvfile, fieldnames=header_key)
+            writer.writeheader()
+            for item in data:
+                writer.writerow(item)
+    
+    def main():
+        try:
+            сomplexity = lower
+            length = 16
+            pass_num = 5
+            
+            csv_file = 'passwords.csv'
+            log_file = 'passwords.log'
+            
+            if os.path.exists(log_file):
+                fmode = 'a'
+            else:
+                fmode = 'w'
+            
+            logging.basicConfig(level=logging.INFO, filename=log_file, filemode=fmode, datefmt='%d-%b-%y %H:%M:%S', format='%(asctime)s - Level severity: [%(levelname)s] USER: %(name)s, PID: %(process)d - FUNCTON:(%(filename)s).%(funcName)s(%(lineno)d), Thread ID: %(thread)d, MSG: %(message)s')
+            
+            print(f"Choose what to add to complicate the password...\n\n1. Uppercase\n2. Digits\n3. Special characters\n4. All\nC. Confirm\n")
+            
+            while (choice := quote(input("Pick a number: ").lower())) !='c':
+                if(int(choice) == 1):
+                    сomplexity += upper
+                elif(int(choice) == 2):
+                    сomplexity += num
+                elif(int(choice) == 3):
+                    сomplexity += symbols
+                elif(int(choice) == 4):
+                    сomplexity += upper + num + symbols
+                    break
+                else:
+                    print("Please pick a valid option!")
+            
+            while (choice := quote(input(f'\nBy default password length 16 characters. Do you want change [Y/N]: ').lower())) !=str():
+                if choice in ('yes', 'y'):
+                    length = int(quote(input(f'\nEnter new password length: ')))
+                    break
+                elif choice in ('no', 'n'):
+                    break
+                else:
+                    print("Please use y/n or yes/no.\n")
+            
+            while (choice := quote(input(f'\nBy default Number of passwords 5. Do you want change [Y/N]: ').lower())) !=str():
+                if choice in ('yes', 'y'):
+                    pass_num = int(quote(input(f'\nEnter new number of passwords: ')))
+                    break
+                elif choice in ('no', 'n'):
+                    break
+                else:
+                    print("Please use y/n or yes/no.\n")
+        
+            passwords = password_gen(сomplexity,length,pass_num)
+            show_table(passwords)
+            write_csv(csv_file, passwords)
+        except (Exception, getopt.GetoptError) as err:
+            logging.exception("Exception occurred")
+    
+    if __name__ == "__main__":
+        main()
+    ```
+
+??? quote "Результат"
+    ``` console
+    Choose what to add to complicate the password...
+    
+    1. Uppercase
+    2. Digits
+    3. Special characters
+    4. All
+    C. Confirm
+    
+    Pick a number:  1
+    Pick a number:  2
+    Pick a number:  c
+    
+    By default password length 16 characters. Do you want change [Y/N]:  
+    
+    By default Number of passwords 5. Do you want change [Y/N]:  y
+    
+    Enter new number of passwords:  10
+    
+    Format table Markdown
+    
+    | Password         | Hash                                                                                                       |
+    |:-----------------|:-----------------------------------------------------------------------------------------------------------|
+    | 2Xwc7P0qsUtLCSDl | $6$zScSpHj4S3pOOFu/$aCuzPI5ejvCXm1y.N1ip5bjBraWBgzjLrBq.79h21PfOsJaW3z79ApiFtc3gxi1KmXtckddIOiI2JhCMId5LI1 |
+    | 1snlC4O8fXxmr05E | $6$ZdQ46shwArv6l..q$DQJJ53XQCFU7jxpSaTYp5otxpMirJFzo8vsADUFCDkSVhSomkP1stuzISM9WQusio.atxIjSirnjvea17Y0i0/ |
+    | TUBfIul4xC5JYmy8 | $6$uZ0oVfGMmO1xdy9A$KedeXnSEbE0KoGszQ5igp0g8S/fcuzwm4oJMQDjB/5Q2Tly/nIqQEw4LfzI33FtMumDS97z9Ok.hPHX4g4GWM0 |
+    | hGQigpkRV57SWw1s | $6$qs3UVBXBeuw5qz3g$uSY1RrZJdb8x0UX0fPlh7foYfU6e1alXWopj1Jf9bvdLChQwe7L/zCzR45yGvM0/vNnThbcf9xCbZMbEiDqE.1 |
+    | vZrVWInzS0NwKdsT | $6$L7E4FIArN.MRitwD$49NqB8aJup4KXe/aQgdr/.Ra8o/JtN.uoKKoflSCUuapZp/BQjpUEYMbOKOsgo/S.wsxScdL957zi285K6oRH1 |
+    | iEPR4WZCTnMrOJDq | $6$lwxEYIuK4jX1K1pr$ywjqNUVF4di/MybunQzndVqryGtfID3c6Hgg6yyWLpSjycejG/cf.ZFLw19JYun.il9CI4VdrrCAxufqFuJyl. |
+    | FCKPuh9rQoIjBvLf | $6$2IzLGJuP.8hPc0QQ$Tw/5K80PeuoLOUkKKsuY7ifjpwAykqyPJDoX8c2rqsAuxsgznV2kT/tI96N.V5F4glGuVPehlB5gZR/fH4oN1. |
+    | S2nAs9jXcYezNV7K | $6$F6KuEHVlCRWM/EPw$m/I7jnH.m1mgkEV10iQNSbP1OZCuocv8pyGHYjeyF/Q.T9QHOXMNub.yQJ/SlSERpatwgRwXPBXIFfke6j4p50 |
+    | zBUiDlqJ9YWV2KLO | $6$XfloR.0cIJ3n4Ga1$8olQ.D83VQwjrjvoZGSRJ8XBDZVgHSuhP/byKUtYHT..3y/l96gmkqg/swMUnTalmLv.O2ZyVJpw.G59aqWqQ. |
+    | dIHS2A5D4mEz6uVn | $6$CwgzqOpL0pi6tuc5$sm.VUXpckzbhPYfOSG0t.oCz3BUJAQPyK0HIKNOfV5SdzK.jtQ0m4R1B/cmhQgjI3HFu2VZ93p7awQmVTy91T1 |
+    ```
+
+#### QR-code
+
+##### QR-code generator
+
+!!! example "Пример кода"
+    ``` python
+    import io
+    import qrcode
+    
+    from qrcode.image.styledpil import StyledPilImage
+    from qrcode.image.styles.moduledrawers import RoundedModuleDrawer
+    
+    f = io.StringIO()
+    
+    qr = qrcode.QRCode(error_correction=qrcode.constants.ERROR_CORRECT_L)
+    qr.add_data("https://docs-python.ru/packages/generator-qr-kodov")
+    qr.make(fit=True)
+    
+    img = qr.make_image(fill_color="black", back_color="white", image_factory=StyledPilImage, module_drawer=RoundedModuleDrawer())
+    img.save(f"qr-code.png", format=None)
+    
+    qr.print_ascii(out=f)
+    f.seek(0)
+    print(f.read())
+    
+    qr.clear()
+    ```
+
+??? quote "Результат"
+    ``` console
+                                         
+                                         
+        █▀▀▀▀▀█ ▀▄▄▄▀▄█ █▀█▀  █▀▀▀▀▀█    
+        █ ███ █ ███▀▀█▄▄ ▄▀▀█ █ ███ █    
+        █ ▀▀▀ █ ▀ ▄ █▄▀▀█▀▀█  █ ▀▀▀ █    
+        ▀▀▀▀▀▀▀ ▀ █ █ ▀▄█▄▀▄█ ▀▀▀▀▀▀▀    
+        ▀███▄▄▀▄█ ██  █▀█▀████▄ █▀▀ █    
+        █▀█▀█ ▀█▄██▀▄▄  ▀▀▄ ███ ▀ ▀▀▄    
+        ▀  ▄▀▄▀  █▀ ████▄█ █▄▄▄▀ ▀█▄▄    
+        ▀▀▄██▀▀███ ▄▀ █ ▄▀ █▄▄▀▀█ ▀█▀    
+          ▀▄▀ ▀▄ ▄▀▄▄█▄▄ ▄▀▀██ █▀█▄█     
+        ▀ █▄  ▀██▀█  ▀▄████▄▀█▀▀▄ █      
+         ▀ ▀▀▀▀▀█▄▀█ ▄ ▀▀▀█ █▀▀▀███▄▄    
+        █▀▀▀▀▀█  ▀█▀█▄▄▄█▀▄▀█ ▀ ██ ▀     
+        █ ███ █ ▄ █▀▀▀▀███  ██▀██▄▀█▄    
+        █ ▀▀▀ █ ██▀▄▄▀▄▄▄▀▀▀█▀ ▀▄▄▀▄▀    
+        ▀▀▀▀▀▀▀ ▀▀▀▀▀▀    ▀▀▀      ▀     
+                                         
+                                         
+    ```
+
+##### Show QR-code
+
+!!! example "Пример кода"
+    ``` python
+    import cv2
+    from matplotlib import pyplot as plt
+    
+    img = cv2.imread(f"qr-code.png")
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    plt.imshow(img)
+    plt.axis("off")
+    plt.show()
+    
+    detect = cv2.QRCodeDetector()
+    value = detect.detectAndDecode(img)
+    
+    print(value[0])
+    ```
+
+![qrcode](images/qr-code.png){.border}
+
+??? quote "Результат"
+    ``` console
+    https://docs-python.ru/packages/generator-qr-kodov
+    ```
+
+#### Установка Jupyter-Lab на сервер c CentOS
+
+Для установки выполнить следующие команды
+
+##### Создать виртуальное окружение
+
+!!! example ""
+    ``` console
+    python -m venv data-science
+    ```
+
+###### Активировать виртуальное окружение
+
+!!! example ""
+    ``` console
+    source data-science/bin/activate
+    ```
+
+##### Установить приложение
+
+!!! example ""
+    ``` console
+    python -m pip install --force-reinstall --index-url http://nexus.rzd/repository/pypi-proxy/simple/ --trusted-host nexus.rzd --upgrade pip
+    python -m pip install --use-pep517 --force-reinstall --index-url http://nexus.rzd/repository/pypi-proxy/simple/ --trusted-host nexus.rzd -U \
+    wheel jupyterlab notebook jupyter-git ipywidgets
+    ```
+
+##### Задать пароль на доступ
+
+!!! example ""
+    ``` console
+    jupyter-lab password
+    ```
+
+##### Создать директорию для проектов
+
+!!! example ""
+    ``` console
+    mkdir -p /var/jupyter-lab
+    ```
+
+##### Создать сервис для запуска приложения
+
+Заменить переменные на свои. Переменные указаны в формате `{значение}`
+
+!!! example ""
+    ``` console
+    cat <<- 'EOF' > /etc/systemd/system/jupyter-lab.service
+    [Unit]
+    Description=Jupyter WEB server
+    Documentation=https://docs.jupyter.org/en/latest/
+    After=network.target
+    [Service]
+    Type=simple
+    User={Имя пользователя в домашней директории которого создано виртуальное окружение}
+    Group={Имя группы пользователя в домашней директории которого создано виртуальное окружение}
+    PIDFile=/var/run/jupyter-lab/jupyter-lab.pid
+    WorkingDirectory=/root/data-science/
+    Environment="VIRTUAL_ENV=/root/data-science/"
+    Environment="PATH=$VIRTUAL_ENV/bin:$PATH"
+    ExecStart=bash -c 'bin/jupyter-lab --ip {IP адрес сервера} --port 8888 --no-browser --allow-root --autoreload --notebook-dir=/var/jupyter-lab'
+    ExecReload=/bin/kill -s HUP $MAINPID
+    ExecStop=/bin/kill -s KILL $MAINPID
+    TimeoutSec=0
+    RestartSec=2
+    Restart=always
+    StartLimitBurst=3
+    StartLimitInterval=60s
+    [Install]
+    WantedBy=multi-user.target
+    EOF
+    ```
+
+Запустить и активировать сервис
+
+!!! example ""
+    ``` console
+    systemctl start --now jupyter-lab.service
+    ```
 
 ### 22.4 Некоторые команды awk
 

@@ -99,7 +99,6 @@ theme:
 hooks:
   - material/overrides/hooks/shortcodes.py
   - material/overrides/hooks/translations.py
-  - pdf.py
 
 markdown_extensions:
   - abbr

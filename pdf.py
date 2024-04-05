@@ -3,6 +3,7 @@ import mkdocs.plugins
 import mkdocs.structure.pages
 from bs4 import BeautifulSoup, PageElement
 
+
 def modify_html(html: str, href: str) -> str:
     logger.info(f'(hook on inject_link: {page.title})')
     # SVG 'file-download' size 2x from fontawesome: https://fontawesome.com/icons/file-download?style=solid
@@ -14,5 +15,5 @@ def modify_html(html: str, href: str) -> str:
     # insert into HTML
     insert_point = "<article class=\"md-content__inner md-typeset\">"
     html = html.replace(insert_point, insert_point + button_tag)
-    
+
     return html
