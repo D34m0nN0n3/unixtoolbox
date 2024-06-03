@@ -13,7 +13,7 @@ use_directory_urls: false
 copyright: Copyright &copy; <a href="https://github.com/D34m0nN0n3">Dmitriy Prigoda</a>.
 
 nav:
-    - UnixToolbox: 'index.md'
+    - Введение: 'index.md'
     - Система: 'system.md'
     - Процессы: 'processes.md'
     - Файловая система: 'file_system.md'
