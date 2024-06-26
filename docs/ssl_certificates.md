@@ -97,6 +97,12 @@
 
 Сохраните созданный CSR (`newreq.pem`), так как он может быть подписан снова при следующем продлении, подпись ограничит срок действия сертификата. Этот процесс также создал закрытый ключ `newkey.pem`.
 
+!!! help "Для генерации запроса одной командой с созданием приватного ключа в 4096 бит"
+    openssl req -new \  
+    -newkey rsa:4096 -nodes -keyout your.key \  
+    -out your.csr \  
+    -subj "/C=RU/ST=Moscow/L=Moscow/O=RZD/CN=hostname.domain/emailAddress=admin@domain"  
+
 ### 11.5 Подписание сертификата
 
 Запрос на сертификат должен быть подписан ЦС, чтобы быть действительным, обычно этот шаг выполняется поставщиком. Примечание: замените "servername" именем вашего сервера в следующих командах.
@@ -137,7 +143,39 @@
 
 **Храните закрытый ключ в безопасности!**
 
-### 11.7 Просмотр информации о сертификате
+### 11.7 Преобразование формата сертификата
+
+#### PEM to PKCS12
+
+!!! example ""
+    openssl pkcs12 -export -name "yourdomain-digicert-(expiration date)" \  
+    -out yourdomain.pfx -inkey yourdomain.key -in yourdomain.crt
+
+#### PKCS12 to PEM
+
+!!! example "Используйте следующую команду, чтобы извлечь закрытый ключ из файла PKCS#12 (.pfx) и преобразовать его в закрытый ключ в формате PEM"
+    openssl pkcs12 -in yourdomain.pfx -nocerts -out yourdomain.key -nodes
+
+!!! example "Используйте следующую команду, чтобы извлечь сертификат из файла PKCS#12 (.pfx) и преобразовать его в сертификат в кодировке PEM"
+    openssl pkcs12 -in yourdomain.pfx -nokeys -clcerts -out yourdomain.crt
+
+#### PEM to DER
+
+!!! example "Используйте следующую команду для преобразования сертификата в кодировке PEM в сертификат в кодировке DER"
+    openssl x509 -inform PEM -in yourdomain.crt -outform DER -out yourdomain.der
+
+!!! example "Используйте следующую команду для преобразования закрытого ключа, закодированного в PEM, в закрытый ключ, закодированный в DER"
+    openssl rsa -inform PEM -in yourdomain.key -outform DER -out yourdomain_key.der
+
+#### DER to PEM
+
+!!! example "Используйте следующую команду для преобразования сертификата в кодировке DER в сертификат в кодировке PEM"
+    openssl x509 -inform DER -in yourdomain.der -outform PEM -out yourdomain.crt
+
+!!! example "Используйте следующую команду для преобразования закрытого ключа, закодированного в DER, в закрытый ключ, закодированный в PEM"
+    openssl rsa -inform DER -in yourdomain_key.der -outform PEM -out yourdomain.key
+
+### 11.8 Просмотр информации о сертификате
 
 Чтобы просмотреть информацию о сертификате, просто выполните:
 
