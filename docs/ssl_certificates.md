@@ -184,3 +184,7 @@
     **# openssl req -noout -text -in server.csr**   - Просмотр информации о запросе  
     **# openssl s_client -connect cb.vu:443**       - Проверка сертификата веб-сервера  
     **# echo quit | openssl s_client -showcerts -servername example.com -connect example.com:443 > cacert.pem**   - Выгрузить корневой сертификат CA из цепочки веб-сервера  
+
+!!! hint "Утилиты online"
+    https://www.cryptool.org/en/cto/openssl/  
+    https://www.ssl.com/online-csr-and-key-generator/  
