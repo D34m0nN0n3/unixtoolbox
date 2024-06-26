@@ -14,6 +14,9 @@
 
 ### 11.2 Настройка OpenSSL
 
+!!! hint ""
+    В разных дистрибутивах файл конфигурации расположение отличается. В RHEL он расположен по пути: `/etc/pki/tls/openssl.cnf` Проверить расположение можно командой: `find / -name openssl.cnf`
+
 Мы используем `/usr/local/certs` как каталог для этого примера, проверьте или отредактируйте `/etc/ssl/openssl.cnf` соответственно вашим настройкам, чтобы знать, где будут созданы файлы. Вот относящиеся к делу части `openssl.cnf`:
 
 !!! note ""
@@ -41,6 +44,48 @@
     **-keyout CA/private/cakey.pem -out CA/cacert.pem**  
 
 ### 11.4 Создание запроса на подписание сертификата
+
+!!! info "Секция в конфиге отвечающая за формирования запроса"
+    ```txt
+    ####################################################################
+    [ req ]
+    default_bits            = 2048
+    default_md              = sha256
+    default_keyfile         = privkey.pem
+    distinguished_name      = req_distinguished_name
+    attributes              = req_attributes
+    x509_extensions = v3_ca # The extensions to add to the self signed cert
+    
+    # Passwords for private keys if not present they will be prompted for
+    # input_password = secret
+    # output_password = secret
+    
+    # This sets a mask for permitted string types. There are several options.
+    # default: PrintableString, T61String, BMPString.
+    # pkix   : PrintableString, BMPString (PKIX recommendation before 2004)
+    # utf8only: only UTF8Strings (PKIX recommendation after 2004).
+    # nombstr : PrintableString, T61String (no BMPStrings or UTF8Strings).
+    # MASK:XXXX a literal mask value.
+    # WARNING: ancient versions of Netscape crash on BMPStrings or UTF8Strings.
+    string_mask = utf8only
+    
+    # req_extensions = v3_req # The extensions to add to a certificate request
+    
+    [ req_distinguished_name ]
+    countryName                     = Country Name (2 letter code)
+    countryName_default             = XX
+    countryName_min                 = 2
+    countryName_max                 = 2
+    
+    stateOrProvinceName             = State or Province Name (full name)
+    #stateOrProvinceName_default    = Default Province
+    
+    localityName                    = Locality Name (eg, city)
+    localityName_default            = Default City
+    
+    0.organizationName              = Organization Name (eg, company)
+    0.organizationName_default      = Default Company Ltd
+    ```
 
 Чтобы создать новый сертификат (для почтового сервера или веб-сервера, например), сначала создайте запрос на сертификат со своим закрытым ключом. Если ваше приложение не поддерживает шифрование закрытого ключа (например, UW-IMAP не поддерживает), отключите шифрование с `-nodes`.
 
