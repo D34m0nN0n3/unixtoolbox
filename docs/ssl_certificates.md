@@ -188,3 +188,4 @@
 !!! hint "Утилиты online"
     https://www.cryptool.org/en/cto/openssl/  
     https://www.ssl.com/online-csr-and-key-generator/  
+    https://github.com/linux-system-roles/certificate  
