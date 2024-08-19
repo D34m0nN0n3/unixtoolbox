@@ -49,10 +49,10 @@ plugins:
   - macros
   - minify:
       minify_html: true
-  - with-pdf:
-      copyright: https://github.com/D34m0nN0n3
-      cover_subtitle: ''
-      output_path: UnixToolbox.pdf
+#  - with-pdf:
+#      copyright: https://github.com/D34m0nN0n3
+#      cover_subtitle: ''
+#      output_path: UnixToolbox.pdf
 
 extra_css:
   - assets/extra.css
