@@ -12,7 +12,7 @@ beautifulsoup4~=4.6.3
 colorama~=0.4
 paginate~=0.5
 regex>=2022.4
-requests~=2.26
+requests~=2.32.4
 qrcode
 
 # Other requirements
