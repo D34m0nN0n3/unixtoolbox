@@ -134,7 +134,7 @@
 #### 25.6.3 Веб-серверы и история команд (поиск RCE и веб-шеллов)
 
 !!! example ""
-    **# grep -E "POST .*\.(php|jsp|asp|py|sh)" /var/log/nginx/access.log /var/log/httpd/access_log 2>/dev/null**                 - Поиск подозрительных POST-запросов и обращений к скриптам  
+    **# grep -E "POST .*\\.(php|jsp|asp|py|sh)" /var/log/nginx/access.log /var/log/httpd/access_log 2>/dev/null**                - Поиск подозрительных POST-запросов и обращений к скриптам  
     **# grep -iE "union.\*select|eval\\(|base64_decode|/etc/passwd|cmd=|wget%20|curl%20" /var/log/nginx/access.log 2>/dev/null** - Поиск признаков инъекций и сканеров в HTTP-запросах  
     **# ls -la /root/.\*history /home/\*/.\*history 2>/dev/null**                                                                - Проверка файлов истории команд пользователей (поиск обнуления/подмены на `/dev/null`)  
 
@@ -150,7 +150,7 @@
     **# chmod +x ~/ir-toolkit/bin/busybox**                                                                        - Выдача прав на исполнение  
     **# for cmd in \$(~/ir-toolkit/bin/busybox --list); do ln -s busybox ~/ir-toolkit/bin/\$cmd; done**            - Создание символических ссылок на базовые утилиты внутри каталога  
     **# git clone https://github.com/Magentron/chkrootkit.git ~/ir-toolkit/chkrootkit**                            - Клонирование исходного кода chkrootkit  
-    **# cd ~/ir-toolkit/chkrootkit && make make CC="gcc -static" sense**                                           - Статическая сборка C-утилит из состава chkrootkit  
+    **# cd ~/ir-toolkit/chkrootkit && make CC="gcc -static" sense**                                                - Статическая сборка C-утилит из состава chkrootkit  
     **# find . -maxdepth 1 -type f -executable ! -name "chkrootkit" -exec cp {} ~/ir-toolkit/bin/ \;**             - Копирование собранных бинарников в общую папку `bin`  
     **# git clone --depth 1 https://github.com/CISOfy/lynis ~/ir-toolkit/lynis**                                   - Загрузка портативного Lynis (не требует компиляции)  
     **# cd ~ && tar -czf ir-toolkit.tar.gz ir-toolkit/**                                                           - Упаковка набора в архив для передачи на целевой хост  
