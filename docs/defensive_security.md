@@ -86,7 +86,7 @@
 !!! example ""
     **# ps auxwf**                                                          - Дерево всех процессов (поиск скрытых или нестандартных дочерних процессов)  
     **# ls -alR /proc/*/exe 2>/dev/null | grep deleted**                    - Процессы, запущенные из удаленных бинарных файлов (признак малвари в памяти)  
-    **# tr '\0' '\n' < /proc/\<PID\>/environ**                              - Проверка переменных окружения подозрительного процесса (подмена `LD_PRELOAD`)  
+    **# tr '\0' '\n' &lt; /proc/&lt;PID&gt;/environ**                       - Проверка переменных окружения подозрительного процесса (подмена `LD_PRELOAD`)  
     **# for u in $(cut -f1 -d: /etc/passwd); do crontab -u \$u -l; done**   - Проверка задач cron для всех пользователей  
     **# ls -la /etc/cron* /var/spool/cron/crontabs/**                       - Системные задания cron  
     **# systemctl list-timers --all**                                       - Проверка всех таймеров systemd  
