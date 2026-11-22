@@ -213,10 +213,10 @@ done
 Проверка и очистка механизмов закрепления (Persistence):
 
 !!! example ""
-    **# crontab -u \<user\> -e**                                                                                 - Редактирование пользовательских задач cron  
+    **# crontab -u <user\> -e**                                                                                  - Редактирование пользовательских задач cron  
     **# ls -la /etc/cron.d/ /etc/cron.daily/ /etc/cron.hourly/**                                                 - Проверка системных директорий планировщика cron  
-    **# systemctl stop \<name\>.service && systemctl disable \<name\>.service**                                  - Остановка и отключение вредоносного systemd-сервиса  
-    **# rm -f /etc/systemd/system/\<name\>.service && systemctl daemon-reload**                                  - Удаление unit-файла службы и перезагрузка конфигурации systemd  
+    **# systemctl stop <name\>.service && systemctl disable <name\>.service**                                    - Остановка и отключение вредоносного systemd-сервиса  
+    **# rm -f /etc/systemd/system/<name\>.service && systemctl daemon-reload**                                   - Удаление unit-файла службы и перезагрузка конфигурации systemd  
     **# cat /etc/ld.so.preload**                                                                                 - Проверка файла перехвата библиотек в user-space  
     **# > /etc/ld.so.preload**                                                                                   - Очистка файла перехвата библиотек в user-space  
     **# grep -rn "curl\|wget\|base64\|/dev/tcp" /etc/profile /etc/bash.bashrc ~/.bashrc ~/.profile 2>/dev/null** - Поиск вредоносных вставок в профилях оболочек  
