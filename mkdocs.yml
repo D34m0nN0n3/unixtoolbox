@@ -38,6 +38,7 @@ nav:
     - Создание скриптов: 'scripting.md'
     - Программирование: 'programming.md'
     - Управление конфигурациями: 'configuration_management.md'
+    - Defensive (оборонительная) безопасность: 'defensive_security.md'
 
 plugins:
   - search:
