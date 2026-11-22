@@ -205,7 +205,7 @@ done
 
 !!! example ""
     **# fuser -k -9 "\$SUSPECT_FILE"**                                                                        - Принудительное завершение процессов, использующих вредоносный файл  
-    **# kill -9 \<PID\>**                                                                                     - Завершение вредоносного процесса по его PID  
+    **# kill -9 <PID\>**                                                                                     - Завершение вредоносного процесса по его PID  
     **# lsattr "\$SUSPECT_FILE" && chattr -ia "\$SUSPECT_FILE"**                                              - Проверка и снятие атрибутов защиты от удаления/изменения (`immutable`)  
     **# rm -f "\$SUSPECT_FILE"**                                                                              - Удаление вредоносного файла с диска  
     **# rm -rf "\$INCIDENT_DIR" "/tmp/dfir_package_$(hostname)."* "/tmp/ir-toolkit"* /tmp/ir-toolkit.tar.gz** - Очистка временных каталогов после передачи архива  
@@ -216,7 +216,7 @@ done
     **# crontab -u <user\> -e**                                                                                  - Редактирование пользовательских задач cron  
     **# ls -la /etc/cron.d/ /etc/cron.daily/ /etc/cron.hourly/**                                                 - Проверка системных директорий планировщика cron  
     **# systemctl stop <name\>.service && systemctl disable <name\>.service**                                    - Остановка и отключение вредоносного systemd-сервиса  
-    **# rm -f /etc/systemd/system/<name\>.service && systemctl daemon-reload**                                   - Удаление unit-файла службы и перезагрузка конфигурации systemd  
+    **# rm -f /etc/systemd/system/\<name\>.service && systemctl daemon-reload **                                  - Удаление unit-файла службы и перезагрузка конфигурации systemd  
     **# cat /etc/ld.so.preload**                                                                                 - Проверка файла перехвата библиотек в user-space  
     **# > /etc/ld.so.preload**                                                                                   - Очистка файла перехвата библиотек в user-space  
     **# grep -rn "curl\|wget\|base64\|/dev/tcp" /etc/profile /etc/bash.bashrc ~/.bashrc ~/.profile 2>/dev/null** - Поиск вредоносных вставок в профилях оболочек  
