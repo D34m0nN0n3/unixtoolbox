@@ -201,11 +201,11 @@ done
 #### 25.8.3 Удаление компрометации и точек закрепления (Persistence)
 
 !!! example ""
-    **# fuser -k -9 "$SUSPECT_FILE"**                                    - Принудительное завершение процессов, использующих вредоносный файл  
-    **# kill -9 <PID>**                                                  - Завершение вредоносного процесса по его PID  
-    **# lsattr "$SUSPECT_FILE" && chattr -ia "$SUSPECT_FILE"**           - Проверка и снятие атрибутов защиты от удаления/изменения (`immutable`)  
-    **# rm -f "$SUSPECT_FILE"**                                          - Удаление вредоносного файла с диска  
-    **# rm -rf "$INCIDENT_DIR" "/tmp/dfir_package_$(hostname)."* "/tmp/ir-toolkit"* /tmp/ir-toolkit.tar.gz** - Очистка временных каталогов после передачи архива  
+    **# fuser -k -9 "\$SUSPECT_FILE"**                                     - Принудительное завершение процессов, использующих вредоносный файл  
+    **# kill -9 <PID>**                                                    - Завершение вредоносного процесса по его PID  
+    **# lsattr "\$SUSPECT_FILE" && chattr -ia "\$SUSPECT_FILE"**           - Проверка и снятие атрибутов защиты от удаления/изменения (`immutable`)  
+    **# rm -f "\$SUSPECT_FILE"**                                           - Удаление вредоносного файла с диска  
+    **# rm -rf "\$INCIDENT_DIR" "/tmp/dfir_package_$(hostname)."* "/tmp/ir-toolkit"* /tmp/ir-toolkit.tar.gz** - Очистка временных каталогов после передачи архива  
 
 Проверка и очистка механизмов закрепления (Persistence):
 
