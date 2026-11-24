@@ -56,3 +56,69 @@ Sudo настраивается в `/etc/sudoers` и должен редакти
     # Каждый может монтировать/размонтировать CD-ROM на настольных ПК  
     ALL DESKTOP = NOPASSWD: /sbin/mount /cdrom, /sbin/umount /cdrom
     ```
+
+### 8.2 Ошибки и решение проблем
+
+!!! error "Поврежденный /etc/sudoers - ошибка в синтаксисе"
+    Никто не застрахован от ошибок, вместо команды `sudo visudo` я отредактировал файл с помощью стандартного `sudo vim /etc/sudoers` или любым другим редактором или скриптом, и после сохранения всех правок и попытке использовать права  суперпользователя, система выдала ошибку:  
+    ```bash
+    >>> /etc/sudoers: syntax error near line 23 <<<  
+    sudo: parse error in /etc/sudoers near line 23  
+    sudo: no valid sudoers sources found, quitting  
+    sudo: unable to initialize policy plugin  
+    ```
+
+    Есть решения проблемы, использовать:  
+    ```bash
+    # pkexec visudo -f /etc/sudoers.d/<file_name>  
+    ```
+
+    Но получаем в ответ:  
+    ```bash
+    ==== AUTHENTICATING FOR org.freedesktop.policykit.exec ===  
+    Authentication is needed to run '/usr/sbin/visudo' as the super user  
+    Authenticating as: user,,, (name) Password:  polkit-agent-helper-1:  
+    error response to PolicyKit daemon: GDBus.Error:org.freedesktop.PolicyKit1.Error.Failed: No session for cookie  
+    ==== AUTHENTICATION FAILED ===  
+    Error executing command as another user: Not authorized  
+    This incident has been reported.  
+    ```
+
+    Интересная ситуация, чтобы редактировать sudoers мне нужны права суперпользователя, но получить их можно, только "починив" файл sudoers - замкнутый круг. Но есть выход из этой ситуации: откройте два сеанса ssh к серверу (или работа в двух терминалах или две вкладки в терминале).  
+
+    === "В первом сеансе получите PID bash:"
+    ```bash
+    # echo $$
+    ```
+
+    === "Во второй сессии запустите агент аутентификации с помощью:"
+    ```bash
+    # pkttyagent --process <PID>
+    ```
+    
+    === "Вернувшись в первый сеанс, запустите:"
+    ```bash
+    # pkexec visudo
+    ```
+
+    === "На втором сеансе вы получите приглашение пароля:"
+    ```bash
+    ==== AUTHENTICATING FOR org.freedesktop.policykit.exec ===  
+    Для запуска приложения '/usr/sbin/visudo' от имени суперпользователя требуется аутентификация  
+    Authenticating as: user,,, (name)  
+    Password:  
+    ==== AUTHENTICATION COMPLETE ===  
+    ```
+
+    `visudo` запуститься в первой сессии. Проблема решена!
+
+    Если что-то пойдет не так, то выдаст предупреждение:  
+    ```bash
+    >>> /etc/sudoers: syntax error near line 30 <<<  
+    What now?                                             #Что будем делать?  
+    Options are:  
+      (e)dit sudoers file again                           #снова редактировать  
+      e(x)it without saving changes to sudoers file       #выйти без сохранения  
+      (Q)uit and save changes to sudoers file (DANGER!)   #сохранить изменения (опасность!)  
+    What now? x
+    ```
